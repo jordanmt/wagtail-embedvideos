@@ -46,23 +46,32 @@ function(modal) {
 
     ajaxifyLinks(modal.body);
 
-    // $('form.embed-video-upload', modal.body).submit(function() {
-    //     var formdata = new FormData(this);
+    $('form.embed-video-upload', modal.body).submit(function () {
+        var formdata = new FormData(this);
 
-    //     $.ajax({
-    //         url: this.action,
-    //         data: formdata,
-    //         processData: false,
-    //         contentType: false,
-    //         type: 'POST',
-    //         dataType: 'text',
-    //         success: function(response){
-    //             modal.loadResponseText(response);
-    //         }
-    //     });
+        if ($('#id_title', modal.body).val() == '') {
+            var li = $('#id_title', modal.body).closest('li');
+            if (!li.hasClass('error')) {
+                li.addClass('error');
+                $('#id_title', modal.body).closest('.field-content').append('<p class="error-message"><span>This field is required.</span></p>')
+            }
+            setTimeout(cancelSpinner, 500);
+        } else {
+            $.ajax({
+                url: this.action,
+                data: formdata,
+                processData: false,
+                contentType: false,
+                type: 'POST',
+                dataType: 'text',
+                success: function (response) {
+                    modal.loadResponseText(response);
+                }
+            });
+        }
 
-    //     return false;
-    // });
+        return false;
+    });
 
     $('form.embed-video-search', modal.body).submit(search);
 

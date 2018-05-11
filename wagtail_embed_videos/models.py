@@ -100,9 +100,14 @@ class AbstractEmbedVideo(CollectionMember, index.Indexed, models.Model):
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('Created'))
     uploaded_by_user = models.ForeignKey(
-        settings.AUTH_USER_MODEL, null=True, blank=True, editable=False, on_delete=models.SET_NULL)
+        settings.AUTH_USER_MODEL, null=True,
+        blank=True,
+        editable=False,
+        on_delete=models.SET_NULL,
+        verbose_name=_('Uploader')
+    )
 
     tags = TaggableManager(help_text=None, blank=True, verbose_name=_('Tags'))
 

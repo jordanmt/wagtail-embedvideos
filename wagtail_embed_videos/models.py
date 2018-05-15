@@ -21,7 +21,7 @@ from django.db.models import Q
 
 from wagtail.admin.utils import get_object_usage
 from wagtail.images.models import Image as WagtailImage
-from wagtail.images import get_image_model
+from wagtail.images import get_image_model, get_image_model_string
 from wagtail.search import index
 from wagtail.search.queryset import SearchableQuerySetMixin
 from wagtail.core.models import CollectionMember
@@ -34,11 +34,6 @@ try:
     get_model = apps.get_model
 except ImportError:
     from django.db.models.loading import get_model
-
-try:
-    image_model_name = settings.WAGTAILIMAGES_IMAGE_MODEL
-except AttributeError:
-    image_model_name = 'wagtailimages.Image'
 
 
 def checkUrl(url):
@@ -93,7 +88,7 @@ class AbstractEmbedVideo(CollectionMember, index.Indexed, models.Model):
     title = models.CharField(max_length=255, verbose_name=_('Title'))
     url = EmbedVideoField()
     thumbnail = models.ForeignKey(
-        image_model_name,
+        get_image_model_string(),
         verbose_name="Thumbnail",
         null=True,
         blank=True,

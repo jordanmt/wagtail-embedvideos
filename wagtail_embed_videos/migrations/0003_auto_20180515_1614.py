@@ -10,7 +10,7 @@ from wagtail.images import get_image_model_string
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('wagtail_embed_videos', '0002_collection'),
+        ('wagtail_embed_videos', '0002_collections'),
     ]
 
     operations = [

@@ -163,7 +163,7 @@ class EmbedVideo(AbstractEmbedVideo):
     admin_form_fields = (
         'title',
         'url',
-        'thumbnail',
+        # 'thumbnail',
         'tags',
         'collection',
     )

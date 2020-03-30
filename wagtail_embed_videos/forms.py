@@ -5,7 +5,7 @@ from django.forms.models import modelform_factory
 from django.utils.translation import ugettext_lazy as _
 
 from wagtail.images.edit_handlers import AdminImageChooser
-from wagtail.admin.forms import (
+from wagtail.admin.forms.collections import (
     BaseCollectionMemberForm, collection_member_permission_formset_factory
 )
 from wagtail_embed_videos.models import EmbedVideo

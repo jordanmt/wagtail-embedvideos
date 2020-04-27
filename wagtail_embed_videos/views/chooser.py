@@ -8,7 +8,8 @@ from django.contrib.auth.decorators import permission_required
 from wagtail.admin.modal_workflow import render_modal_workflow
 from wagtail.admin.forms.search import SearchForm
 from wagtail.search.backends import get_search_backends
-from wagtail.admin.utils import PermissionPolicyChecker, popular_tags_for_model
+from wagtail.admin.auth import PermissionPolicyChecker
+from wagtail.admin.models import popular_tags_for_model
 from wagtail.core.models import Collection
 from wagtail.search import index as search_index
 

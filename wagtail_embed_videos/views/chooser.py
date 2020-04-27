@@ -11,7 +11,6 @@ from wagtail.search.backends import get_search_backends
 from wagtail.admin.utils import PermissionPolicyChecker, popular_tags_for_model
 from wagtail.core.models import Collection
 from wagtail.search import index as search_index
-from wagtail.utils.pagination import paginate
 
 from embed_video.backends import detect_backend
 
@@ -77,7 +76,8 @@ def chooser(request):
             if tag_name:
                 embed_videos = embed_videos.filter(tags__name=tag_name)
 
-        paginator, embed_videos = paginate(request, embed_videos, per_page=12)
+        paginator = Paginator(embed_videos, per_page=12)
+        embed_videos = paginator.get_page(request.GET.get('p'))
 
         return render(request, "wagtail_embed_videos/chooser/results.html", {
             'embed_videos': embed_videos,
@@ -92,7 +92,9 @@ def chooser(request):
         if len(collections) < 2:
             collections = None
 
-        paginator, embed_videos = paginate(request, embed_videos, per_page=12)
+
+        paginator = Paginator(embed_videos, per_page=12)
+        embed_videos = paginator.get_page(request.GET.get('p'))
 
         return render_modal_workflow(
             request,
@@ -165,7 +167,8 @@ def chooser_upload(request):
         form = EmbedVideoForm(user=request.user)
 
     embed_videos = EmbedVideo.objects.order_by('-created_at')
-    paginator, images = paginate(request, embed_videos, per_page=12)
+    paginator = Paginator(embed_videos, per_page=12)
+    images = paginator.get_page(request.GET.get('p'))
 
     return render_modal_workflow(
         request,
@@ -177,7 +180,6 @@ def chooser_upload(request):
 
 def chooser_select_format(request, embed_video_id):
     embed_video = get_object_or_404(get_embed_video_model(), id=embed_video_id)
-    print(embed_video)
 
     if request.POST:
         form = EmbedVideoInsertionForm(request.POST, initial={'alt_text': embed_video.default_alt_text})

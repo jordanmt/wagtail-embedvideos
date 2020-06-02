@@ -19,7 +19,7 @@ from django.core.files import File
 from django.core.files.temp import NamedTemporaryFile
 from django.db.models import Q
 
-from wagtail.admin.utils import get_object_usage
+from wagtail.admin.models import get_object_usage
 from wagtail.images.models import Image as WagtailImage
 from wagtail.images import get_image_model, get_image_model_string
 from wagtail.search import index
